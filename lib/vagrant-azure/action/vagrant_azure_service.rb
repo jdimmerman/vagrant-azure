@@ -39,6 +39,18 @@ module VagrantPlugins
         end
 
       end
+      
+      class VagrantAzureImageService
+        attr_reader :azureImage
+        def initialize(azureImage)
+          @azureImage = azureImage
+        end
+        def method_missing(method, *args, &block)
+          azureImage.send(method, *args, &block)
+        end
+
+      end
+      
     end
   end
 end
