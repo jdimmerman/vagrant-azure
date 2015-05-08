@@ -39,6 +39,9 @@ module VagrantPlugins
             # Remove this once the Azure SDK adds the exception handling for the
             # methods defined in VagrantAzureService
             env[:azure_vm_service] = VagrantAzureService.new(Azure::VirtualMachineManagementService.new)
+            if env[:azure_vm_image_service].nil?
+				      env[:azure_vm_image_service] = VagrantAzureImageService.new(Azure::VirtualMachineImageManagementService.new)
+		      	end
           end
 
           @app.call(env)
