@@ -17,8 +17,10 @@ module VagrantPlugins
         def call(env)
 
           unless env[:machine].config.vm.guest
-            env[:ui].info 'Determining OS Type By Image'
-            guest_os_type = env[:azure_vm_service].send(:get_os_type, env[:machine].provider_config.vm_image)
+            env[:ui].info 'Determining OS Type By Image of ' + env[:machine].provider_config.vm_image
+			      image = env[:azure_vm_image_service].send(:list_virtual_machine_images).select { |x| x.name.downcase == env[:machine].provider_config.vm_image.downcase }.first
+			      env[:ui].error 'The virtual machine image source is not valid.' unless image
+            guest_os_type = image.os_type
             env[:machine].config.vm.guest = guest_os_type && guest_os_type.downcase.to_sym
             if env[:machine].config.vm.guest == :windows && env[:machine].config.vm.communicator.nil?
               env[:machine].config.vm.communicator = :winrm
