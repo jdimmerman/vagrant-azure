@@ -48,7 +48,7 @@ Gem::Specification.new do |s|
   s.files         = unignored_files
   s.executables   = unignored_files.map { |f| f[/^bin\/(.*)/, 1] }.compact
 
-  s.add_runtime_dependency "azure", "0.6.4"
+  s.add_runtime_dependency "azure", "0.7.0.pre"
   s.add_runtime_dependency "httpclient", "2.4.0"
 
   s.add_development_dependency "bundler", "~> 1.3"
